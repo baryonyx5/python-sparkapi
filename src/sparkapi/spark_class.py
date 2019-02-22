@@ -115,7 +115,7 @@ class SparkAPI:
         self.orgId = orgId
         self.url = base_url + url_suffix
 
-    def list(self, blacklist=(), whitelist=(), **kwargs):
+    def list(self, blacklist=(), whitelist=(), **kwargs) -> List[DataClass]:
         params = {}
         params.update({k: v for k, v in kwargs.items() if v is not None})
         url = self.url
@@ -128,6 +128,7 @@ class SparkAPI:
             incr += 1
             url = resp.links.get('next', {}).get('url')
             params = {}
+
         return data
 
     def get_by_id(self, id, blacklist=(), whitelist=()) -> DataClass:

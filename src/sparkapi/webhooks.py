@@ -9,6 +9,7 @@ class Hook(SparkDataClass):
     """
     Represent a Cisco Spark Web hook.
     """
+
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
         self.name = data.pop('name', '')
@@ -30,6 +31,7 @@ class Hook(SparkDataClass):
 
 class HookEvent(Hook):
     """Represent a Cisco Spark Web hook event."""
+
     def __init__(self, data, whitelist=(), blacklist=()):
         self.ownedBy = data.pop('ownedBy')
         self.actorId = data.pop('actorId', '')
@@ -77,12 +79,14 @@ class WebHooks(SparkAPI):
 
     def create(self, name, url, resource, event, filt=None, secret=None):
         """Create Spark web hook."""
-        payload = {'name': name,
-                   'targetUrl': url,
-                   'resource': resource,
-                   'event': event,
-                   'filter': filt,
-                   'secret': secret}
+        payload = {
+            'name': name,
+            'targetUrl': url,
+            'resource': resource,
+            'event': event,
+            'filter': filt,
+            'secret': secret
+        }
 
         data = self.session.post(self.url, payload=payload)
         return self.DataClass(data.json())

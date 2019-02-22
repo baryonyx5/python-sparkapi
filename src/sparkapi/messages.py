@@ -13,6 +13,7 @@ class Message(SparkDataClass):
         self.toPersonId = data.pop('toPersonId', '')
         self.toPersonEmail = data.pop('toPersonEmail', '')
         self.text = data.pop('text', '') if 'text' not in blacklist else ''
+        self.html = data.pop('html', '') if 'html' not in blacklist else ''
         self.files = data.pop('files', []) if 'files' not in blacklist else ''
         self.mentionedPeople = self.decode_list(data.pop('mentionedPeople', []))
         self.created = self.set_datetime(data.pop('created'))

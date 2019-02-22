@@ -62,6 +62,5 @@ class People(SparkAPI):
             payload = params
         else:
             raise ValueError('Must provide either a Person object or id and param dict')
-        # payload = {name: value for name, value in params.items()}
         resp = self.session.put(self.url, id=id, payload=payload)
         return self.DataClass(resp.json())

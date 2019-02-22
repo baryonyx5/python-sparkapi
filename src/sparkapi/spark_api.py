@@ -98,7 +98,7 @@ class SparkAPI:
     """
     BASE_URL = 'https://api.ciscospark.com/v1/'
 
-    def __init__(self, access_token, orgId=None, timeout=360, debug=False):
+    def __init__(self, access_token, orgId=None, timeout=360, debug=False, load_me=True):
         """
         """
         self.access_token = access_token
@@ -127,3 +127,6 @@ class SparkAPI:
         self.organizations = \
             Organizations(self.session, self.BASE_URL, self.orgId,
                           url_suffix='organizations')
+        self.me = None
+        if load_me:
+            self.me = self.people.me()
