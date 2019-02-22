@@ -1,9 +1,9 @@
 """Spark Teams Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Team(SparkDataClass):
+class Team(BaseObject):
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
         self.name = data.pop('roomId')
@@ -12,7 +12,7 @@ class Team(SparkDataClass):
 
 
 # noinspection PyShadowingBuiltins
-class Teams(SparkAPI):
+class Teams(BaseAPI):
 
     DataClass = Team
 

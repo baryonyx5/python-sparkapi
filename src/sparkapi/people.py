@@ -1,12 +1,19 @@
 """Spark People Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Person(SparkDataClass):
-    create_attrs = ['firstName', 'lastName',
-                     'displayName', 'emails', 'avatar',
-                     'orgId', 'roles', 'licenses']
+class Person(BaseObject):
+    create_attrs = [
+        'firstName',
+        'lastName',
+        'displayName',
+        'emails',
+        'avatar',
+        'orgId',
+        'roles',
+        'licenses',
+    ]
 
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
@@ -33,13 +40,12 @@ class Person(SparkDataClass):
     def update_params(self) -> dict:
         return {k: self.get(k, None) for k in self.create_attrs}
 
-    def __str__(self):
-        return 'Spark Person ({})'.format(self.emails[0])
+    def __repr__(self):
+        return 'Person(email=%s)' % self.email
 
 
 # noinspection PyShadowingBuiltins
-class People(SparkAPI):
-
+class People(BaseAPI):
     DataClass = Person
 
     def get_by_email(self, email, max=None):

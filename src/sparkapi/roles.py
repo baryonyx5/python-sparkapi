@@ -1,9 +1,9 @@
 """Spark Roles Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Role(SparkDataClass):
+class Role(BaseObject):
 
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
@@ -12,7 +12,7 @@ class Role(SparkDataClass):
 
 
 # noinspection PyShadowingBuiltins
-class Roles(SparkAPI):
+class Roles(BaseAPI):
 
     DataClass = Role
 
@@ -20,5 +20,4 @@ class Roles(SparkAPI):
         return self.get_by_id(id)
 
     def delete(self, id):
-        """Not Implemented"""
-        pass
+        raise NotImplementedError

@@ -1,9 +1,9 @@
 """Spark Room Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Room(SparkDataClass):
+class Room(BaseObject):
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
         self.title = data.pop('title', '')
@@ -15,12 +15,12 @@ class Room(SparkDataClass):
         self.created = self.set_datetime(data.pop('created'))
         super().__init__(data, whitelist, blacklist)
 
-    def __str__(self):
-        return 'Spark Room (ID: {}, Title:{})'.format(self.id, self.title)
+    def __repr__(self):
+        return 'Room(title=%s, type=%s, id:%s)' % (self.title, self.type, self.id)
 
 
 # noinspection PyShadowingBuiltins
-class Rooms(SparkAPI):
+class Rooms(BaseAPI):
 
     DataClass = Room
 

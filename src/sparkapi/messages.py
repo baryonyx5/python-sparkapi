@@ -1,9 +1,9 @@
 """Spark Message Class."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Message(SparkDataClass):
+class Message(BaseObject):
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
         self.roomId = data.pop('roomId')
@@ -19,55 +19,44 @@ class Message(SparkDataClass):
         self.created = self.set_datetime(data.pop('created'))
         super().__init__(data, whitelist, blacklist)
 
-    def __str__(self):
-        return 'Spark Message ({})'.format(self.id)
+
+def _message_payload(text, files, markdown: bool):
+    k = 'markdown' if markdown else 'text'
+    payload = {k: text}
+    if files:
+        payload['files'] = files
+    return payload
 
 
 # noinspection PyShadowingBuiltins
-class Messages(SparkAPI):
-
+class Messages(BaseAPI):
     DataClass = Message
 
-    def get_by_room(self, roomId, mentionedPeople=None,
-                    before=None, beforeMessage=None, max=None,
-                    blacklist=(), whitelist=()):
+    def get_by_room(self, roomId, mentionedPeople=None, before=None,
+                    beforeMessage=None, max=None, blacklist=(), whitelist=()):
 
-        return self.list(roomId=roomId,
-                         mentionedPeople=mentionedPeople,
-                         before=before,
-                         beforeMessage=beforeMessage,
-                         max=max,
-                         blacklist=blacklist,
-                         whitelist=whitelist)
+        return self.list(
+            roomId=roomId,
+            mentionedPeople=mentionedPeople,
+            before=before,
+            beforeMessage=beforeMessage,
+            max=max,
+            blacklist=blacklist,
+            whitelist=whitelist
+        )
 
     def get_message(self, id, blacklist=(), whitelist=()):
         return self.get_by_id(id, blacklist, whitelist)
 
     def send_to_room(self, roomId, text, files=None, markdown=False):
 
-        payload = {'roomId': roomId}
-        if markdown:
-            payload['markdown'] = text
-        else:
-            payload['text'] = text
-        if files:
-            payload['files'] = files
-
+        payload = _message_payload(text, files, markdown)
+        payload['roomId'] = roomId
         data = self.session.post(self.url, payload=payload)
         return self.DataClass(data.json())
 
-    def send_to_person(self, text, toPersonId=None, toPersonEmail=None,
-                       files=None, markdown=False):
-        payload = {}
-        if markdown:
-            payload['markdown'] = text
-        else:
-            payload['text'] = text
-        if files:
-            payload['files'] = files
-
-        payload.update(self._id_or_email([('toPersonId', toPersonId),
-                                          ('toPersonEmail', toPersonEmail)]))
-
+    def send_to_person(self, text, toPersonId=None, toPersonEmail=None, files=None, markdown=False):
+        payload = _message_payload(text, files, markdown)
+        payload.update(self._id_or_email(toPersonId=toPersonId, toPersonEmail=toPersonEmail))
         data = self.session.post(self.url, payload=payload)
         return self.DataClass(data.json())

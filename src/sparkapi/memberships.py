@@ -1,9 +1,9 @@
 """Spark Membership Class. """
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Membership(SparkDataClass):
+class Membership(BaseObject):
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
         self.roomId = data.pop('roomId')
@@ -18,7 +18,7 @@ class Membership(SparkDataClass):
 
 
 # noinspection PyShadowingBuiltins
-class Memberships(SparkAPI):
+class Memberships(BaseAPI):
 
     DataClass = Membership
 
@@ -26,7 +26,7 @@ class Memberships(SparkAPI):
         return self.list(roomId=roomId, max=max)
 
     def get_by_person(self, roomId, personId=None, personEmail=None):
-        params = self._id_or_email([('personId', personId), ('personEmail', personEmail)])
+        params = self._id_or_email(personId=personId, personEmail=personEmail)
         params['roomId'] = roomId
         return self.list(**params)
 
@@ -34,7 +34,7 @@ class Memberships(SparkAPI):
         return self.get_by_id(id)
 
     def create(self, roomId, personId=None, personEmail=None, isModerator=False):
-        payload = self._id_or_email([('personId', personId), ('personEmail', personEmail)])
+        payload = self._id_or_email(personId=personId, personEmail=personEmail)
         payload['roomId'] = roomId
         payload['isModerator'] = isModerator
         data = self.session.post(self.url, payload=payload)

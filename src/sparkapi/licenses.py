@@ -1,9 +1,9 @@
 """Spark License Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class License(SparkDataClass):
+class License(BaseObject):
 
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
@@ -14,7 +14,7 @@ class License(SparkDataClass):
 
 
 # noinspection PyShadowingBuiltins
-class Licenses(SparkAPI):
+class Licenses(BaseAPI):
 
     DataClass = License
 
@@ -22,5 +22,4 @@ class Licenses(SparkAPI):
         return self.get_by_id(id)
 
     def delete(self, id):
-        """Not Implemented"""
-        pass
+        raise NotImplementedError

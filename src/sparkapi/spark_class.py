@@ -2,22 +2,20 @@
 
 from typing import List
 from abc import ABCMeta
-from collections import MutableMapping
 import arrow
 import logging
 import base64
 import re
-import time
-from sparkapi.exc import TooManyRequestsException, SparkAPIError
+from sparkapi.exc import SparkAPIError
 
 log = logging.getLogger('|.{}'.format(__name__.split('.')[-1]))
 
 
-class SparkDataClass(MutableMapping):
-    __metaclass__ = ABCMeta
+class BaseObject(metaclass=ABCMeta):
     _format = 'YYYY-MM-DDTHH:mm:ss'
 
     def __init__(self, data, whitelist=(), blacklist=()):
+        self.id = None
         if whitelist:
             data = {k: v for k, v in data.items() if k in whitelist}
         elif blacklist:
@@ -45,7 +43,8 @@ class SparkDataClass(MutableMapping):
         naive_ts = arrow.get(value, fmt).naive
         return arrow.get(naive_ts).to('utc').datetime
 
-    def decode_list(self, values):
+    @staticmethod
+    def decode_list(values):
         return [p for p in values]
 
     def decode_id(self, value):
@@ -99,16 +98,16 @@ class SparkDataClass(MutableMapping):
         return len(self.__dict__)
 
     def __repr__(self):
-        return "%s(%r)" % (self.__class__, self.__dict__)
+        return '%s(id=%s)' % (self.__class__, self.id)
 
     def __str__(self):
-        return "%s" % self.__class__
+        return self.__repr__()
 
 
 # noinspection PyShadowingBuiltins
-class SparkAPI:
+class BaseAPI:
 
-    DataClass = SparkDataClass
+    DataClass = BaseObject
 
     def __init__(self, session, base_url, orgId, url_suffix=''):
         self.session = session
@@ -140,8 +139,8 @@ class SparkAPI:
         return resp
 
     @staticmethod
-    def _id_or_email(param_list):
-        for param, val in param_list:
+    def _id_or_email(**kwargs):
+        for param, val in kwargs:
             if val:
                 return {param: val}
-        raise SparkAPIError('One of %s must be provided' % ','.join([p[0] for p in param_list]))
+        raise SparkAPIError('One of %s must be provided' % ','.join(list(kwargs.keys())))

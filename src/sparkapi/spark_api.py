@@ -7,7 +7,6 @@ from .people import People
 from .roles import Roles
 from .rooms import Rooms
 from .messages import Messages
-from .metrics import Metrics
 from .teams import Teams
 from .memberships import Memberships
 from .team_memberships import TeamMemberships
@@ -16,6 +15,8 @@ from .licenses import Licenses
 from .events import Events
 from .webhooks import WebHooks
 from sparkapi.exc import TooManyRequestsException, HTTPError, SparkAPIError
+
+log = logging.getLogger(__name__)
 
 
 def resp_or_exception(response):
@@ -62,7 +63,7 @@ class RestSession:
                                           params=params, timeout=self.timeout))
             except TooManyRequestsException as ex:
                 retry = ex.retry_after
-                logging.warning('429: Too Many Requests received. Waiting %s seconds', retry)
+                log.warning('429: Too Many Requests received. Waiting %s seconds', retry)
                 retries += 1
                 time.sleep(retry)
             else:
@@ -106,27 +107,15 @@ class SparkAPI:
         self.timeout = timeout
         self.debug = debug
         self.session = RestSession(self.access_token, self.timeout)
-        self.people = People(self.session, self.BASE_URL, self.orgId, url_suffix='people')
-        self.roles = Roles(self.session, self.BASE_URL, self.orgId, url_suffix='roles')
-        self.rooms = Rooms(self.session, self.BASE_URL, self.orgId, url_suffix='rooms')
-        self.teams = Teams(self.session, self.BASE_URL, self.orgId, url_suffix='teams')
-        self.messages = \
-            Messages(self.session, self.BASE_URL, self.orgId, url_suffix='messages')
-        self.licenses = \
-            Licenses(self.session, self.BASE_URL, self.orgId, url_suffix='licenses')
-        self.events = Events(self.session, self.BASE_URL, self.orgId, url_suffix='events')
-        self.memberships = \
-            Memberships(self.session, self.BASE_URL, self.orgId, url_suffix='memberships')
-        self.metrics = \
-            Metrics(self.session, self.BASE_URL, self.orgId, url_suffix='metrics/adhoc?')
-        self.webhooks = \
-            WebHooks(self.session, self.BASE_URL, self.orgId, url_suffix='webhooks')
-        self.team_memberships = \
-            TeamMemberships(self.session, self.BASE_URL, self.orgId,
-                            url_suffix='team/memberships')
-        self.organizations = \
-            Organizations(self.session, self.BASE_URL, self.orgId,
-                          url_suffix='organizations')
-        self.me = None
-        if load_me:
-            self.me = self.people.me()
+        self.people = People(self.session, self.BASE_URL, self.orgId, 'people')
+        self.roles = Roles(self.session, self.BASE_URL, self.orgId, 'roles')
+        self.rooms = Rooms(self.session, self.BASE_URL, self.orgId, 'rooms')
+        self.teams = Teams(self.session, self.BASE_URL, self.orgId, 'teams')
+        self.messages = Messages(self.session, self.BASE_URL, self.orgId, 'messages')
+        self.licenses = Licenses(self.session, self.BASE_URL, self.orgId, 'licenses')
+        self.events = Events(self.session, self.BASE_URL, self.orgId, 'events')
+        self.memberships = Memberships(self.session, self.BASE_URL, self.orgId, 'memberships')
+        self.webhooks = WebHooks(self.session, self.BASE_URL, self.orgId, 'webhooks')
+        self.team_memberships = TeamMemberships(self.session, self.BASE_URL, self.orgId, 'team/memberships')
+        self.organizations = Organizations(self.session, self.BASE_URL, self.orgId, 'organizations')
+        self.me = self.people.me() if load_me else None

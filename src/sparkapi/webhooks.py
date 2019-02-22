@@ -1,11 +1,11 @@
 """Manage Spark Web hooks."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 from .messages import Message
 from .memberships import Membership
 
 
-class Hook(SparkDataClass):
+class Hook(BaseObject):
     """
     Represent a Cisco Spark Web hook.
     """
@@ -61,7 +61,8 @@ class HookEvent(Hook):
         return 'Spark WebHook Event ({})'.format(self.id)
 
 
-class WebHooks(SparkAPI):
+# noinspection PyShadowingBuiltins
+class WebHooks(BaseAPI):
     """Manipulate Cisco Spark Web hooks."""
     DataClass = Hook
 
@@ -109,13 +110,9 @@ class WebHooks(SparkAPI):
         data = self.session.put(self.url, id=id, payload=payload)
         return self.DataClass(data.json())
 
-    def event(self, data):
-        try:
-            return HookEvent(data)
-        except Exception as e:
-            print(f"HookEvent Error: {e}")
-            print(data)
-            return None
+    @staticmethod
+    def event(data):
+        return HookEvent(data)
 
     def update_or_create(self, name, url, secret, resource='all', event='all', filt=None):
         existing = self.get_by_name(name)

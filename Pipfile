@@ -5,10 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 bpython = "*"
+pytest = "*"
+tox = "*"
 
 [packages]
 sparkapi = {editable = true,path = "."}
-webexteamssdk = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

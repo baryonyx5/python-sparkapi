@@ -1,11 +1,11 @@
 """Spark Events Class."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 from .messages import Message
 from .memberships import Membership
 
 
-class Event(SparkDataClass):
+class Event(BaseObject):
     def __init__(self, event_data, whitelist=(), blacklist=()):
         self.id = event_data.pop('id')
         self.resource = event_data.pop('resource', '')
@@ -26,25 +26,22 @@ class Event(SparkDataClass):
         else:
             return None
 
-    def __str__(self):
-        return 'Spark {} Event ({})'.format(self.resource, self.id)
-
 
 # noinspection PyShadowingBuiltins
-class Events(SparkAPI):
-
+class Events(BaseAPI):
     DataClass = Event
 
-    def list_events(self, resource, event_type='created', from_date=None,
-                    to_date=None, actorId=None, max=None,
-                    blacklist=(), whitelist=()):
-
-        params = {'resource': resource,
-                  'type': event_type,
-                  'from': from_date,
-                  'to': to_date,
-                  'actorId': actorId,
-                  'max': max}
+    def list_events(self, resource, event_type='created',
+                    from_date=None, to_date=None, actorId=None,
+                    max=None, blacklist=(), whitelist=()):
+        params = {
+            'resource': resource,
+            'type': event_type,
+            'from': from_date,
+            'to': to_date,
+            'actorId': actorId,
+            'max': max
+        }
 
         return self.list(blacklist, whitelist, **params)
 

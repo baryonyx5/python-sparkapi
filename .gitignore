@@ -4,6 +4,8 @@
 **/*.pyc
 .DS_Store
 **/.cache/
+**/.tox/
+**/*.egg-info/
 dist
 logs/
 build

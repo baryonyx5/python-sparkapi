@@ -1,9 +1,9 @@
 """Spark Team Membership Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class TeamMembership(SparkDataClass):
+class TeamMembership(BaseObject):
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
         self.teamId = data.pop('teamId')
@@ -17,7 +17,7 @@ class TeamMembership(SparkDataClass):
 
 
 # noinspection PyShadowingBuiltins
-class TeamMemberships(SparkAPI):
+class TeamMemberships(BaseAPI):
 
     DataClass = TeamMembership
 
@@ -25,8 +25,7 @@ class TeamMemberships(SparkAPI):
         return self.get_by_id(id)
 
     def create(self, teamId, personId=None, personEmail=None, isModerator=False):
-        payload = self._id_or_email([('personId', personId),
-                                     ('personEmail', personEmail)])
+        payload = self._id_or_email(personId=personId, personEmail=personEmail)
         payload['teamId'] = teamId
         payload['isModerator'] = isModerator
         data = self.session.post(self.url, payload=payload)

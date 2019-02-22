@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='sparkapi',
-    version='1.0.0',
+    version='0.8.0',
     description='Cisco Spark (Webex Teams) API wrapper for python',
     long_description=read('README.md'),
     author='Kris Seraphine',
@@ -40,7 +40,6 @@ setup(
         'Operating System :: POSIX',
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',

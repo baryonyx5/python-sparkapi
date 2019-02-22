@@ -1,9 +1,9 @@
 """Spark Organization Classes."""
 
-from .spark_class import SparkDataClass, SparkAPI
+from .spark_class import BaseObject, BaseAPI
 
 
-class Organization(SparkDataClass):
+class Organization(BaseObject):
 
     def __init__(self, data, whitelist=(), blacklist=()):
         self.id = data.pop('id')
@@ -13,10 +13,9 @@ class Organization(SparkDataClass):
 
 
 # noinspection PyShadowingBuiltins
-class Organizations(SparkAPI):
+class Organizations(BaseAPI):
 
     DataClass = Organization
 
     def delete(self, id):
-        """Not Implemented"""
-        pass
+        raise NotImplementedError
