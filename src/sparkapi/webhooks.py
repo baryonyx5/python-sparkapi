@@ -1,6 +1,6 @@
 """Manage Spark Web hooks."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 from .messages import Message
 from .memberships import Membership
 
@@ -22,11 +22,11 @@ class Hook(BaseObject):
         self.appId = data.pop('appId', '')
         self.status = data.pop('status', '')
         self.secret = data.pop('secret', '')
-        self.created = self.set_datetime(data.pop('created'))
+        self.created = self.set_datetime(data.pop('created', None))
         super().__init__(data, whitelist, blacklist)
 
     def __str__(self):
-        return 'Spark WebHook ({})'.format(self.id)
+        return 'WebHook(name=%s)' % self.name
 
 
 class HookEvent(Hook):
@@ -57,14 +57,11 @@ class HookEvent(Hook):
         if self.resource == 'memberships' and self.event == 'created':
             return self.data.personId == self.createdBy
 
-    def __str__(self):
-        return 'Spark WebHook Event ({})'.format(self.id)
-
 
 # noinspection PyShadowingBuiltins
 class WebHooks(BaseAPI):
-    """Manipulate Cisco Spark Web hooks."""
     DataClass = Hook
+    uri = 'webhooks'
 
     def get_by_name(self, name, max=None):
         """Return list of Hook objects corresponding to the name provided."""
@@ -89,7 +86,7 @@ class WebHooks(BaseAPI):
             'secret': secret
         }
 
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data.json())
 
     def update(self, id, name=None, url=None, secret=None):
@@ -107,7 +104,7 @@ class WebHooks(BaseAPI):
             secret = existing.secret
 
         payload = {'name': name, 'targetUrl': url, 'secret': secret}
-        data = self.session.put(self.url, id=id, payload=payload)
+        data = self.session.put(self.url(id), payload=payload)
         return self.DataClass(data.json())
 
     @staticmethod

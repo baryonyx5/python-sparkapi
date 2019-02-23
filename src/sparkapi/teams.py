@@ -1,6 +1,6 @@
 """Spark Teams Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Team(BaseObject):
@@ -13,18 +13,18 @@ class Team(BaseObject):
 
 # noinspection PyShadowingBuiltins
 class Teams(BaseAPI):
-
     DataClass = Team
+    uri = 'teams'
 
     def get_team(self, teamId):
         return self.get_by_id(id=teamId)
 
     def create(self, name):
         payload = {'name': name}
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data)
 
     def update(self, id, name):
         payload = {'name': name}
-        data = self.session.put(self.url, id=id, payload=payload)
+        data = self.session.put(self.url(id), payload=payload)
         return self.DataClass(data)

@@ -1,6 +1,6 @@
 """Spark People Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Person(BaseObject):
@@ -47,6 +47,7 @@ class Person(BaseObject):
 # noinspection PyShadowingBuiltins
 class People(BaseAPI):
     DataClass = Person
+    uri = 'people'
 
     def get_by_email(self, email, max=None):
         return self.list(email=email, max=max)
@@ -68,5 +69,5 @@ class People(BaseAPI):
             payload = params
         else:
             raise ValueError('Must provide either a Person object or id and param dict')
-        resp = self.session.put(self.url, id=id, payload=payload)
+        resp = self.session.put(self.url(id), payload=payload)
         return self.DataClass(resp.json())

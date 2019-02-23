@@ -1,6 +1,6 @@
 """Spark Membership Class. """
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Membership(BaseObject):
@@ -19,8 +19,8 @@ class Membership(BaseObject):
 
 # noinspection PyShadowingBuiltins
 class Memberships(BaseAPI):
-
     DataClass = Membership
+    uri = 'memberships'
 
     def get_by_room(self, roomId, max=None):
         return self.list(roomId=roomId, max=max)
@@ -37,10 +37,10 @@ class Memberships(BaseAPI):
         payload = self._id_or_email(personId=personId, personEmail=personEmail)
         payload['roomId'] = roomId
         payload['isModerator'] = isModerator
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data)
 
     def update(self, id, isModerator):
         payload = {'isModerator': isModerator}
-        data = self.session.put(self.url, id=id, payload=payload)
+        data = self.session.put(self.url(id), payload=payload)
         return self.DataClass(data)

@@ -1,6 +1,6 @@
 """Spark Room Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Room(BaseObject):
@@ -21,8 +21,8 @@ class Room(BaseObject):
 
 # noinspection PyShadowingBuiltins
 class Rooms(BaseAPI):
-
     DataClass = Room
+    uri = 'rooms'
 
     def get_by_title(self, title, type=None, max=None):
         data = self.list(type=type, max=max)
@@ -37,10 +37,10 @@ class Rooms(BaseAPI):
 
     def create(self, title, teamId=None):
         payload = {'title': title, 'teamId': teamId}
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data)
 
     def update(self, title, id):
         payload = {'title': title}
-        data = self.session.put(self.url, id=id, payload=payload)
+        data = self.session.put(self.url(id), payload=payload)
         return self.DataClass(data)

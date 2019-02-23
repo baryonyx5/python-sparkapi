@@ -1,6 +1,6 @@
 """Spark Message Class."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Message(BaseObject):
@@ -31,6 +31,7 @@ def _message_payload(text, files, markdown: bool):
 # noinspection PyShadowingBuiltins
 class Messages(BaseAPI):
     DataClass = Message
+    uri = 'messages'
 
     def get_by_room(self, roomId, mentionedPeople=None, before=None,
                     beforeMessage=None, max=None, blacklist=(), whitelist=()):
@@ -49,14 +50,13 @@ class Messages(BaseAPI):
         return self.get_by_id(id, blacklist, whitelist)
 
     def send_to_room(self, roomId, text, files=None, markdown=False):
-
         payload = _message_payload(text, files, markdown)
         payload['roomId'] = roomId
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data.json())
 
     def send_to_person(self, text, toPersonId=None, toPersonEmail=None, files=None, markdown=False):
         payload = _message_payload(text, files, markdown)
         payload.update(self._id_or_email(toPersonId=toPersonId, toPersonEmail=toPersonEmail))
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data.json())

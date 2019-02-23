@@ -1,21 +1,22 @@
 """Spark Parent Classes."""
 
+import re
+import arrow
+import base64
+import logging
 from typing import List
 from abc import ABCMeta
-import arrow
-import logging
-import base64
-import re
+from sparkapi.session import Session
 from sparkapi.exc import SparkAPIError
 
-log = logging.getLogger('|.{}'.format(__name__.split('.')[-1]))
+log = logging.getLogger(__name__)
 
 
 class BaseObject(metaclass=ABCMeta):
     _format = 'YYYY-MM-DDTHH:mm:ss'
+    _id_attr = 'id'
 
     def __init__(self, data, whitelist=(), blacklist=()):
-        self.id = None
         if whitelist:
             data = {k: v for k, v in data.items() if k in whitelist}
         elif blacklist:
@@ -98,7 +99,7 @@ class BaseObject(metaclass=ABCMeta):
         return len(self.__dict__)
 
     def __repr__(self):
-        return '%s(id=%s)' % (self.__class__, self.id)
+        return '%s(id=%s)' % (self.__class__, getattr(self, self._id_attr, ''))
 
     def __str__(self):
         return self.__repr__()
@@ -106,18 +107,24 @@ class BaseObject(metaclass=ABCMeta):
 
 # noinspection PyShadowingBuiltins
 class BaseAPI:
-
+    BASE_URL = 'https://api.ciscospark.com/v1/'
     DataClass = BaseObject
+    uri = ''
 
-    def __init__(self, session, base_url, orgId, url_suffix=''):
+    def __init__(self, session: Session):
         self.session = session
-        self.orgId = orgId
-        self.url = base_url + url_suffix
+
+    def url(self, id=None):
+        uri = self.uri.lstrip('/')
+        url = self.BASE_URL + '/' + uri
+        if id:
+            return url + '/' + id
+        return url
 
     def list(self, blacklist=(), whitelist=(), **kwargs) -> List[DataClass]:
         params = {}
         params.update({k: v for k, v in kwargs.items() if v is not None})
-        url = self.url
+        url = self.url()
         data = []
         incr = 1
         while url:
@@ -131,11 +138,11 @@ class BaseAPI:
         return data
 
     def get_by_id(self, id, blacklist=(), whitelist=()) -> DataClass:
-        resp = self.session.get(self.url, id=id)
+        resp = self.session.get(self.url(id))
         return self.DataClass(resp.json(), blacklist, whitelist)
 
     def delete(self, id):
-        resp = self.session.delete(self.url, id=id)
+        resp = self.session.delete(self.url(id))
         return resp
 
     @staticmethod

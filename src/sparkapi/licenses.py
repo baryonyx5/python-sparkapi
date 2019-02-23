@@ -1,6 +1,6 @@
 """Spark License Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class License(BaseObject):
@@ -15,8 +15,8 @@ class License(BaseObject):
 
 # noinspection PyShadowingBuiltins
 class Licenses(BaseAPI):
-
     DataClass = License
+    uri = 'licenses'
 
     def get_License(self, id):
         return self.get_by_id(id)

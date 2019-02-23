@@ -1,6 +1,6 @@
 """Spark Roles Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Role(BaseObject):
@@ -13,8 +13,8 @@ class Role(BaseObject):
 
 # noinspection PyShadowingBuiltins
 class Roles(BaseAPI):
-
     DataClass = Role
+    uri = 'roles'
 
     def get_role(self, id):
         return self.get_by_id(id)

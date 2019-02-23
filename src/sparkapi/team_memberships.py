@@ -1,6 +1,6 @@
 """Spark Team Membership Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class TeamMembership(BaseObject):
@@ -18,8 +18,8 @@ class TeamMembership(BaseObject):
 
 # noinspection PyShadowingBuiltins
 class TeamMemberships(BaseAPI):
-
     DataClass = TeamMembership
+    uri = 'team/memberships'
 
     def get_team_membership(self, id):
         return self.get_by_id(id)
@@ -28,10 +28,10 @@ class TeamMemberships(BaseAPI):
         payload = self._id_or_email(personId=personId, personEmail=personEmail)
         payload['teamId'] = teamId
         payload['isModerator'] = isModerator
-        data = self.session.post(self.url, payload=payload)
+        data = self.session.post(self.url(), payload=payload)
         return self.DataClass(data)
 
     def update(self, id, isModerator):
         payload = {'isModerator': isModerator}
-        data = self.session.put(self.url, id=id, payload=payload)
+        data = self.session.put(self.url(id), payload=payload)
         return self.DataClass(data)

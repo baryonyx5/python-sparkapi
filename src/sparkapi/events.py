@@ -1,6 +1,6 @@
 """Spark Events Class."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 from .messages import Message
 from .memberships import Membership
 
@@ -30,6 +30,7 @@ class Event(BaseObject):
 # noinspection PyShadowingBuiltins
 class Events(BaseAPI):
     DataClass = Event
+    uri = 'events'
 
     def list_events(self, resource, event_type='created',
                     from_date=None, to_date=None, actorId=None,

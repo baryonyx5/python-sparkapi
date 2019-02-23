@@ -1,6 +1,6 @@
 """Spark Organization Classes."""
 
-from .spark_class import BaseObject, BaseAPI
+from .base import BaseObject, BaseAPI
 
 
 class Organization(BaseObject):
@@ -16,6 +16,7 @@ class Organization(BaseObject):
 class Organizations(BaseAPI):
 
     DataClass = Organization
+    uri = 'organizations'
 
     def delete(self, id):
         raise NotImplementedError
