@@ -11,7 +11,7 @@ class Room(BaseObject):
         self.creatorId = data.pop('creatorId', '')
         self.teamId = data.pop('teamId', '')
         self.isLocked = self.set_bool(data.pop('isLocked'))
-        self.lastActivity = self.set_datetime(data.pop('lastActivity'))
+        self.lastActivity = self.set_datetime(data.pop('lastActivity', None))
         self.created = self.set_datetime(data.pop('created'))
         super().__init__(data, whitelist, blacklist)
 
@@ -37,10 +37,10 @@ class Rooms(BaseAPI):
 
     def create(self, title, teamId=None):
         payload = {'title': title, 'teamId': teamId}
-        data = self.session.post(self.url(), payload=payload)
+        data = self.session.post(self.url(), json=payload)
         return self.DataClass(data)
 
     def update(self, title, id):
         payload = {'title': title}
-        data = self.session.put(self.url(id), payload=payload)
+        data = self.session.put(self.url(id), json=payload)
         return self.DataClass(data)

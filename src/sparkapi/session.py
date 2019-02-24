@@ -27,28 +27,20 @@ def resp_or_exception(response):
 
 
 # noinspection PyShadowingBuiltins
-class Session:
-    CONTENT_TYPE = 'application/json'
+class Session(requests.Session):
 
     def __init__(self, access_token, timeout=None):
+        super().__init__()
         self.access_token = access_token
         self.timeout = timeout
-        self._session = requests.session()
+        self.headers['Authorization'] = 'Bearer %s' % self.access_token
+        self.headers['Content-type'] = 'application/json'
 
-    @property
-    def headers(self):
-        return {
-            'Authorization': 'Bearer %s' % self.access_token,
-            'Content-type': self.CONTENT_TYPE
-        }
-
-    def get(self, url, params=None):
+    def get(self, url, params=None, **kwargs):
         retries = 0
         while retries < 5:
             try:
-                resp = resp_or_exception(
-                    self._session.get(
-                        url=url, headers=self.headers, params=params, timeout=self.timeout))
+                resp = resp_or_exception(super().get(url=url, params=params, **kwargs))
             except exc.TooManyRequestsException as ex:
                 retry = ex.retry_after
                 log.warning('429: Too Many Requests received. Waiting %s seconds', retry)
@@ -58,14 +50,13 @@ class Session:
                 return resp
         raise exc.SparkAPIError('Too Many Consecutive Retries (%d) for %s', retries, url)
 
-    def post(self, url, payload=None):
-        resp = self._session.post(url, headers=self.headers, json=payload, timeout=self.timeout)
+    def post(self, url, params=None, data=None, json=None, **kwargs):
+        resp = super().post(url, data=data, json=json, **kwargs)
         return resp_or_exception(resp)
 
-    def put(self, url, payload=None):
-        resp = self._session.put(url, headers=self.headers, json=payload, timeout=self.timeout)
+    def put(self, url, params=None, data=None, json=None, **kwargs):
+        resp = super().put(url, params=params, data=data, json=json, **kwargs)
         return resp_or_exception(resp)
 
-    def delete(self, url):
-        resp = self._session.delete(url, headers=self.headers, timeout=self.timeout)
-        return resp_or_exception(resp)
+    def delete(self, url, **kwargs):
+        return resp_or_exception(super().delete(url, **kwargs))

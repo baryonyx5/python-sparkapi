@@ -21,10 +21,10 @@ class Teams(BaseAPI):
 
     def create(self, name):
         payload = {'name': name}
-        data = self.session.post(self.url(), payload=payload)
+        data = self.session.post(self.url(), json=payload)
         return self.DataClass(data)
 
     def update(self, id, name):
         payload = {'name': name}
-        data = self.session.put(self.url(id), payload=payload)
+        data = self.session.put(self.url(id), json=payload)
         return self.DataClass(data)

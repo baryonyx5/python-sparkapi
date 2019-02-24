@@ -21,8 +21,8 @@ class Person(BaseObject):
         self.lastName = data.pop('lastName', '')
         self.displayName = data.pop('displayName', '')
         self.emails = data.pop('emails')
-        self.roles = self.decode_list(data.pop('roles', []))
-        self.licenses = self.decode_list(data.pop('licenses', []))
+        self.roles = data.pop('roles', [])
+        self.licenses = data.pop('licenses', [])
         self.status = data.pop('status', '')
         self.avatar = data.pop('avatar', '')
         self.orgId = data.pop('orgId')
@@ -65,9 +65,10 @@ class People(BaseAPI):
         if isinstance(person, Person):
             id = person.id
             payload = person.update_params
+            payload.update(params)
         elif id:
             payload = params
         else:
             raise ValueError('Must provide either a Person object or id and param dict')
-        resp = self.session.put(self.url(id), payload=payload)
+        resp = self.session.put(self.url(id), json=payload)
         return self.DataClass(resp.json())

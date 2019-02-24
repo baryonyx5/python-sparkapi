@@ -37,10 +37,10 @@ class Memberships(BaseAPI):
         payload = self._id_or_email(personId=personId, personEmail=personEmail)
         payload['roomId'] = roomId
         payload['isModerator'] = isModerator
-        data = self.session.post(self.url(), payload=payload)
+        data = self.session.post(self.url(), json=payload)
         return self.DataClass(data)
 
     def update(self, id, isModerator):
         payload = {'isModerator': isModerator}
-        data = self.session.put(self.url(id), payload=payload)
+        data = self.session.put(self.url(id), json=payload)
         return self.DataClass(data)

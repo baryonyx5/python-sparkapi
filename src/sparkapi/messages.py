@@ -15,7 +15,7 @@ class Message(BaseObject):
         self.text = data.pop('text', '') if 'text' not in blacklist else ''
         self.html = data.pop('html', '') if 'html' not in blacklist else ''
         self.files = data.pop('files', []) if 'files' not in blacklist else ''
-        self.mentionedPeople = self.decode_list(data.pop('mentionedPeople', []))
+        self.mentionedPeople = data.pop('mentionedPeople', [])
         self.created = self.set_datetime(data.pop('created'))
         super().__init__(data, whitelist, blacklist)
 
@@ -52,11 +52,11 @@ class Messages(BaseAPI):
     def send_to_room(self, roomId, text, files=None, markdown=False):
         payload = _message_payload(text, files, markdown)
         payload['roomId'] = roomId
-        data = self.session.post(self.url(), payload=payload)
+        data = self.session.post(self.url(), json=payload)
         return self.DataClass(data.json())
 
     def send_to_person(self, text, toPersonId=None, toPersonEmail=None, files=None, markdown=False):
         payload = _message_payload(text, files, markdown)
         payload.update(self._id_or_email(toPersonId=toPersonId, toPersonEmail=toPersonEmail))
-        data = self.session.post(self.url(), payload=payload)
+        data = self.session.post(self.url(), json=payload)
         return self.DataClass(data.json())

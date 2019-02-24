@@ -86,7 +86,7 @@ class WebHooks(BaseAPI):
             'secret': secret
         }
 
-        data = self.session.post(self.url(), payload=payload)
+        data = self.session.post(self.url(), json=payload)
         return self.DataClass(data.json())
 
     def update(self, id, name=None, url=None, secret=None):
@@ -104,7 +104,7 @@ class WebHooks(BaseAPI):
             secret = existing.secret
 
         payload = {'name': name, 'targetUrl': url, 'secret': secret}
-        data = self.session.put(self.url(id), payload=payload)
+        data = self.session.put(self.url(id), json=payload)
         return self.DataClass(data.json())
 
     @staticmethod

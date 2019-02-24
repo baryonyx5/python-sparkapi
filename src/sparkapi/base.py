@@ -44,10 +44,6 @@ class BaseObject(metaclass=ABCMeta):
         naive_ts = arrow.get(value, fmt).naive
         return arrow.get(naive_ts).to('utc').datetime
 
-    @staticmethod
-    def decode_list(values):
-        return [p for p in values]
-
     def decode_id(self, value):
         """Convert base64 Spark  ID to ciscospark:// URI and return guid"""
         value = str(value).strip()
