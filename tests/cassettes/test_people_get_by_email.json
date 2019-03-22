@@ -1,1 +1,83 @@
-{"http_interactions": [{"request": {"body": {"encoding": "utf-8", "string": ""}, "headers": {"User-Agent": ["python-requests/2.21.0"], "Accept-Encoding": ["gzip, deflate"], "Accept": ["*/*"], "Connection": ["keep-alive"], "Authorization": ["Bearer <SPARK-TOKEN>"], "Content-type": ["application/json"]}, "method": "GET", "uri": "https://api.ciscospark.com/v1//people?email=kris.seraphine%40cdw.com"}, "response": {"body": {"encoding": "UTF-8", "base64_string": "H4sIAAAAAAAAAHSRS2+jMBSF/8rI60BsY56rUUQTRRPI0KSJoOrC2Gbi8hQ4RVA1v32ckWbUWXTpz+fec3TPO2hatW6vDd/yAQTNtaoWQCpR68fzO5AcBCDF1Zxif2ab9UTn9m1nneYdWq2PaBU9HvxLilOchdsxneAc47jcHRMrCyO1D7M6mlAZb6IxC59Iek7GKEzBAoiayuruAMpeDuYgetpdZCO+Mz6arK3BywJwOXQVnWJaC53hh9Z9O/zV6RWNZOWnP00K2Q/qf1TRf+TzLH2jivYaXpTqhmC5JDlHwoHEconPHcKd3LWMnDNIReFTl3hFITByqG0RIhy78BDExByGymQFMnvKSsabe/DlCd0oKxyOITMsl3GDuNwyPKewDE4Y5LZHOYTODXnUEcLjEOOcUIRyhm2uQ1Db9fPcd2/IgVBHbftf2y87gP7hEa73h1O3Oj1UP4/Sm6JzXMf1A8oO6BK//umCxOdU7TcJjiSS0Tmxs6Pu5fVpTudEO7BeUCXuHhgiYiBoIPeIvMC2Ats3sednWjQoqq66MHBtyqYdG43U1N3v2ol+aBvw8fLxOwAA//8DUE6CSwIAAA==", "string": ""}, "headers": {"TrackingID": ["ROUTER_5C71B4C6-A1B2-01BB-45B2-18B1C70E45B2"], "Cache-Control": ["no-cache"], "Content-Type": ["application/json;charset=UTF-8"], "Content-Encoding": ["gzip"], "Vary": ["Accept-Encoding"], "Date": ["Sat, 23 Feb 2019 21:01:59 GMT"], "Server": ["Redacted"], "l5d-success-class": ["1.0"], "Via": ["1.1 linkerd"], "Transfer-Encoding": ["chunked"], "Strict-Transport-Security": ["max-age=63072000; includeSubDomains; preload"]}, "status": {"code": 200, "message": "OK"}, "url": "https://api.ciscospark.com/v1//people?email=kris.seraphine%40cdw.com"}, "recorded_at": "2019-02-23T21:01:59"}], "recorded_with": "betamax/0.8.1"}
+{
+    "http_interactions": [
+        {
+            "recorded_at": "2019-03-22T19:32:33",
+            "request": {
+                "body": {
+                    "encoding": "utf-8",
+                    "string": ""
+                },
+                "headers": {
+                    "Accept": [
+                        "*/*"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Authorization": [
+                        "Bearer <SPARK-TOKEN>"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "Content-type": [
+                        "application/json"
+                    ],
+                    "User-Agent": [
+                        "python-requests/2.21.0"
+                    ]
+                },
+                "method": "GET",
+                "uri": "https://api.ciscospark.com/v1/people?email=<SPARK-EMAIL>"
+            },
+            "response": {
+                "body": {
+                    "base64_string": "H4sIAAAAAAAAALRU0XKrNhD9lTs8tTOxIwmwwU9NgnGdghw7MkR0+iAQBIHAHsB24E7y7RW5t3fSmbZPzSOHs7tHe3b3q1YfOvdwqvmat9qiPkl5pYkurdTH7181wbWFRpEcKLKHZOX2bDicPT0YPHjrEnjr7x7tnCKKImd9oT0YMMKlR7Z65Pjdxokqv4clXvmXyNkbNNxefIdqV1paMSHHClrZiHbapg075qJOf0n4ZZocKu2PK+2YH+oUn6o4bb5p6fpjqtRUh1jIVCU5M3kaARsBZM7nhm5pr1c/aJdDU34g/TQD1s9fkG1N4Azo2qsqwEV7lKzHrBoJvykhXx7/EqIia5GUH/4pJBNN2/0dkuwH8jGWnVnHGgXmXXdsF9fXRsxhOgOGPjdsPjP4LJ7rk5gngKWZzeaGlWUpgjNm6oaRzszMggAZ07aV0ySD04YlZcLrsTPXAXxjSTbjCCQTfZ7wiTHn+sSaZfqEGwngpsU4ALM3aLFZmlocIBQbDMI4QSZXIpg5t+PYnr+pPgAl9dA8r//VZGA/7oC7eQyOt8FSPhBh9X6IK1wtYfQIc1y8m23gkHab1Rb5Ago/3JoRUcYX+4EOW1WhOcj03et/nqP7B7Lcn1m4y6I6aGPXzqMVPMbP4wxIkaR1+x/R4OV+C4LNHuzPfuEWURHlONx3lNAhugNg4wSVR/ISF+uOFm65CfcoKtbQRz7YlIH7hJYIE1z45Kb3SCQ3zk2HHS6oACYla+CRXYnJraTFGkSFFDSwi+hX3kVhALyaS1oFhlfhczy+8/8XiN2nYdn7aD9gQpFHAqnWp8Ore7VWwMDO1vSIm9Ni/0KJWypnpH/5HCF4L21BCS/Hjcaj9U6urN8V0UrlqPYG7kG/IbxSll9oERRRFWQU7fQ4DCS/M/UovJfpnVnECHyKQkiehvVAK/9l4ySDR1TLnHL0UqoLlPukNL1wJ3Cx7fGwvFAiRfT8Oa1aPaFdQUPfxMWt9MLti0+2yrPt4N9B5dXoI84jpzTokBd+RQG+jKOeNCnr0nETEYDGBIIJnBNoLUx9YdpTZNnR93Nzk3TiLLr+G9OeAH2C0DvTXphoCpE1MtuOdSe1N5qo2RgwXiVRq7j0Ia25qJ+1RcZkm6qch2dRL2sWy7F615wU9v2GHtXpPdTqWL7+GQAA//9HXgjmJwYAAA==",
+                    "encoding": "UTF-8",
+                    "string": ""
+                },
+                "headers": {
+                    "Cache-Control": [
+                        "no-cache"
+                    ],
+                    "Content-Encoding": [
+                        "gzip"
+                    ],
+                    "Content-Type": [
+                        "application/json;charset=UTF-8"
+                    ],
+                    "Date": [
+                        "Fri, 22 Mar 2019 19:32:33 GMT"
+                    ],
+                    "Server": [
+                        "Redacted"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=63072000; includeSubDomains; preload"
+                    ],
+                    "TrackingID": [
+                        "ROUTER_5C953851-92FA-01BB-57D4-18B1C70E57D4"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Via": [
+                        "1.1 linkerd"
+                    ],
+                    "l5d-success-class": [
+                        "1.0"
+                    ]
+                },
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "url": "https://api.ciscospark.com/v1/people?email=<SPARK-EMAIL>"
+            }
+        }
+    ],
+    "recorded_with": "betamax/0.8.1"
+}

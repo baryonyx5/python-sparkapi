@@ -103,7 +103,7 @@ class BaseObject(metaclass=ABCMeta):
 
 # noinspection PyShadowingBuiltins
 class BaseAPI:
-    BASE_URL = 'https://api.ciscospark.com/v1/'
+    BASE_URL = 'https://api.ciscospark.com/v1'
     DataClass = BaseObject
     uri = ''
 
@@ -111,10 +111,10 @@ class BaseAPI:
         self.session = session
 
     def url(self, id=None):
-        uri = self.uri.lstrip('/')
+        uri = self.uri.strip('/')
         url = self.BASE_URL + '/' + uri
         if id:
-            return url + '/' + id
+            return url + '/' + id.strip('/')
         return url
 
     def list(self, blacklist=(), whitelist=(), **kwargs) -> List[DataClass]:

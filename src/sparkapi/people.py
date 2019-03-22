@@ -22,6 +22,7 @@ class Person(BaseObject):
         self.displayName = data.pop('displayName', '')
         self.emails = data.pop('emails')
         self.roles = data.pop('roles', [])
+        self.type = data.pop('type', '')
         self.licenses = data.pop('licenses', [])
         self.status = data.pop('status', '')
         self.avatar = data.pop('avatar', '')

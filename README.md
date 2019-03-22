@@ -1,59 +1,31 @@
 # sparkapi-python
-Cisco Spark (Webex Teams) API wrapper for pythong
+Cisco Spark (Webex Teams) API wrapper for python
 
-### Table of Contents  
-* The [service definition docs][docs]   
-* The [protobuf][protorepo] for this project  
-* How are these docs [created][how]?
-* [Change Log](#change-log)
-* [Client Usage](#client-usage)
-* [Server Usage](#server-usage)
- 
-#### Change Log
-v1.0.0
- - Initial version
- 
- 
-#### Usage
-A client class is provided with the following services implemented:
- - GetOrg
- - GetUser
- - CreateNewRepo
- - CheckOrgMembership
+==Note: Please see [webexteamssdk](https://webexteamssdk.readthedocs.io/en/latest/index.html] for a more complete and well-tested Webex Teams library.==
 
-An example is shown below. 
+## Usage
 
 ```python
+from sparkapi import SparkAPI
+>>> TOKEN = '<OAUTH TOKEN OR DEVELOPER TOKEN'
+>>> sp = SparkAPI(access_token=TOKEN)
+>>> me = sp.people.me()
+>>> me
+Person(email=xxx.xxx@xyz.com)
+>>> me.displayName
+'Jon Joe'
+>>> me.lastActivity
+datetime.datetime(2019, 3, 22, 18, 59, 52, tzinfo=tzutc())
 
->>> from protorepo_gha.gha_client import GHAClient
 
->>> client = GHAClient(host='localhost', port=50051, secure=False)
+>>> results = sp.people.get_by_email('fred@gmail.com')
+>>> results
+[Person(email=fred@gmail.com)]
 
->>> resp = client.get_user(name='jon@doe.com', profile_type='GitHub')
->>> print(resp)
-user {
-  login: "jon@doe.com"
-  name: "jon@doe.com"
-  company: "Fake Company"
-  url: "https://github.com/fakeuri"
-}
 
->>> print(resp.user.name)
-jon@doe.com
->>>
+>>> rooms = sp.rooms.list()
+>>> for room in rooms:
+...     print(room.title, room.lastActivity)
+...
+
 ```
-
-#### Server Usage
-You can run the utils.gha_server module provides a grpc server for testing the client. 
-
-Start the server from a command line:
-
-```bash
-python -m protorepo_gha.utils.gha_server --host localhost --port 50051
-Starting grpc server localhost:50051
-```
-
-[docs]: ./docs.md 
-[how]: https://github.com/pseudomuto/protoc-gen-doc
-[gha]: https://github.com/cdwlabs/gha
-[protorepo]: https://github.com/cdwlabs/protorepo/tree/master/gha

@@ -1,1 +1,83 @@
-{"http_interactions": [{"request": {"body": {"encoding": "utf-8", "string": ""}, "headers": {"User-Agent": ["python-requests/2.21.0"], "Accept-Encoding": ["gzip, deflate"], "Accept": ["*/*"], "Connection": ["keep-alive"], "Authorization": ["Bearer <SPARK-TOKEN>"], "Content-type": ["application/json"]}, "method": "GET", "uri": "https://api.ciscospark.com/v1//people/me"}, "response": {"body": {"encoding": "UTF-8", "base64_string": "H4sIAAAAAAAAAHSQXW+bMBiF/4uvm8Q2GDBSpSZpUm1LYE0QC5l24S8SEwII3LQwLb99Rr2btKtXevScV0fnN9AShCDD5ZBhOoiXdc+G+rZx0mGDFusELba7fQDjpNQZ/nrZLqFzfM6cTfL6vn2em6yIdLyE79tihaMiPR+LUkfDHDwAdWW67ED4E3DW9nXVf5Cn08imor6CXw+gOdeVit6uXLWjZonUXVOyPmJXZSstl4dFbeynSovLv4zdmGGtJWdjmi6czYTvYuRIyXLPVxxiyTifQFcqgjxHOTmFDnUYzX3OvdzPIfX8HE27ztaxt2XiImQ1Vpul6K5yhCQUgetywSgLJIeEYM4ZxS6U2Lnj3N3HL4diR77h6nBpNsEq7l8fH+/Ig9DWq9vTl//OCul+B9fxPm0W6ar8nmhacEwG+QOV4mTDolXMqDGOISIThCcYJSgIXRKSYOojcrRSyTozF0bftOk/TTqB1sQJRCH0QjeYEuSPZmeYebMLA12xMaAsM30zztnY6esK/PkbAAD//8OYUPIFAgAA", "string": ""}, "headers": {"TrackingID": ["ROUTER_5C71A178-654A-01BB-49FA-18B1C70E49FA"], "Cache-Control": ["no-cache"], "Content-Type": ["application/json;charset=UTF-8"], "Content-Encoding": ["gzip"], "Vary": ["Accept-Encoding"], "Date": ["Sat, 23 Feb 2019 19:39:35 GMT"], "Server": ["Redacted"], "l5d-success-class": ["1.0"], "Via": ["1.1 linkerd"], "Transfer-Encoding": ["chunked"], "Strict-Transport-Security": ["max-age=63072000; includeSubDomains; preload"]}, "status": {"code": 200, "message": "OK"}, "url": "https://api.ciscospark.com/v1//people/me"}, "recorded_at": "2019-02-23T19:39:36"}], "recorded_with": "betamax/0.8.1"}
+{
+    "http_interactions": [
+        {
+            "recorded_at": "2019-03-22T19:27:56",
+            "request": {
+                "body": {
+                    "encoding": "utf-8",
+                    "string": ""
+                },
+                "headers": {
+                    "Accept": [
+                        "*/*"
+                    ],
+                    "Accept-Encoding": [
+                        "gzip, deflate"
+                    ],
+                    "Authorization": [
+                        "Bearer <SPARK-TOKEN>"
+                    ],
+                    "Connection": [
+                        "keep-alive"
+                    ],
+                    "Content-type": [
+                        "application/json"
+                    ],
+                    "User-Agent": [
+                        "python-requests/2.21.0"
+                    ]
+                },
+                "method": "GET",
+                "uri": "https://api.ciscospark.com/v1/people/me"
+            },
+            "response": {
+                "body": {
+                    "base64_string": "H4sIAAAAAAAAALRUwXKbMBT8lQ6ndibOCNkkxqfGwbhOkQi2gEidHrAhRkKAB7AJZPLvFWmaSWfanprrY997y+5bPWo81mYahbKn0Ox3S7uL+vLkjIPe0ec20edovTFTCilk1qqlHegxxJlDvDGzUONaLEednuElapnlT2jotcii2pmW5BGXtTb7pmUVr8/rpIoOKS+Sz7u4Pd+Vufb9TDukZZHgY75NqgH5qDXdIVFs8nLLZaKGnCJ5HAomBNC4vJyMp9rT2SusLavsDejjBZh++gDN6Ui/AGPtSS2IeX2QUYejfAB8VUQ+bH4RUZ0F32VvvqnKPa/q5veSjF4rb3vLar/6q3LA3KyB7W6CwzxYyFvCpx0KcY7zhc42eorFs4ITHNLGXXoQcZ2j0DMYUWoKv6e9pzZUpUyeBfyzOTe3ZOGfonB9z4qg3tpmypb6YbsfhJV8lxT1P7rBw40HAtcH/gkJWzDBUhz6DSW0Z9cAuFaQOyTNsFg1VNiZG/qQiZWOIAJuFth3cAExwQKRq84hTLrWVYOtmFMODEpWwCHrDJO5pGIFmJCcBqZgX+KGhQFwiljSPJg4OT5th//8/wSxfdcvOgT9HhMKHRJIdZMNXt6oWwUTbHmGQ+yUCv+BEjtTzkjUvg8R7EuTUxJnQ0zwYL2VKuvXgi3VjNyf4A50LolzZXlLRSBYHtxTuB5vw0DG18aYhTcyuTbEFoJ3YaiTu37V0xw9uNaud4iSzMoGL6WKdYpIZjjhmmPhdbhftJRIzvbvI9XyDq4FDZGBxVw6ofeAiKc883p0rSuvBh9xyqxsQvtUoJwC3A6nvquSqEmGJEKgT0Y6GOmXRJ/OjPHMMM/h1GQvGb7aNfzEm+4n0hyB8QjCZ6Q5M+C5DqcDsm6i5qhyo/EiGhqGqPNC9SW3SRHzYq/N7iNZJ2pmuefFooi2ctjeVEdVe3mYDuo9Kwvt6UcAAAD//zhzQR9dBQAA",
+                    "encoding": "UTF-8",
+                    "string": ""
+                },
+                "headers": {
+                    "Cache-Control": [
+                        "no-cache"
+                    ],
+                    "Content-Encoding": [
+                        "gzip"
+                    ],
+                    "Content-Type": [
+                        "application/json;charset=UTF-8"
+                    ],
+                    "Date": [
+                        "Fri, 22 Mar 2019 19:27:56 GMT"
+                    ],
+                    "Server": [
+                        "Redacted"
+                    ],
+                    "Strict-Transport-Security": [
+                        "max-age=63072000; includeSubDomains; preload"
+                    ],
+                    "TrackingID": [
+                        "ROUTER_5C95373C-6C96-01BB-6B44-18B1C70E6B44"
+                    ],
+                    "Transfer-Encoding": [
+                        "chunked"
+                    ],
+                    "Vary": [
+                        "Accept-Encoding"
+                    ],
+                    "Via": [
+                        "1.1 linkerd"
+                    ],
+                    "l5d-success-class": [
+                        "1.0"
+                    ]
+                },
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "url": "https://api.ciscospark.com/v1/people/me"
+            }
+        }
+    ],
+    "recorded_with": "betamax/0.8.1"
+}

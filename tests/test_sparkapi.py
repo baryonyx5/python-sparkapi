@@ -5,11 +5,7 @@ from sparkapi import SparkAPI
 from sparkapi import exc
 from sparkapi.people import Person
 from sparkapi.rooms import Room
-from .conftest import SPARK_TOKEN, CASSETTE_LIBRARY_DIR
-
-# config = Betamax.configure()
-# config.cassette_library_dir = CASSETTE_LIBRARY_DIR
-# config.define_cassette_placeholder('<SPARK-TOKEN>', TOKEN)
+from .conftest import SPARK_TOKEN, CASSETTE_LIBRARY_DIR, EMAIL
 
 
 def test_api_init(sp, recorder):
@@ -44,9 +40,10 @@ def test_api_init_failure():
 def test_people_me(sp, recorder):
     with recorder.use_cassette('test_people_me'):
         me = sp.people.me()
+        print(me)
         assert isinstance(sp.me, Person)
         assert me.id
-        assert me.email == 'baryonyx5@gmail.com'
+        assert me.email == EMAIL
         assert isinstance(me.created, datetime.datetime)
 
 
@@ -70,11 +67,11 @@ def test_people_get_by_email(sp, recorder):
     Then a list containing a single Person object is returned and th email
      attribute matches
     """
-    email = 'kris.seraphine@cdw.com'
     with recorder.use_cassette('test_people_get_by_email'):
-        person = sp.people.get_by_email(email)
+        person = sp.people.get_by_email(EMAIL)
         assert isinstance(person[0], Person)
-        assert person[0].email == email
+        assert person[0].email == EMAIL
+
 
 def test_room_list(sp, recorder):
     """

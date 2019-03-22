@@ -28,8 +28,8 @@ setup(
     description='Cisco Spark (Webex Teams) API wrapper for python',
     long_description=read('README.md'),
     author='Kris Seraphine',
-    author_email='kris.seraphine@cdw.com',
-    url='https://github.com/cdwlabs/sparkapi-python',
+    author_email='baryonyx5@protonmail.com',
+    url='https://github.com/baryonyx5/python-sparkapi',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
@@ -46,6 +46,7 @@ setup(
     ],
     install_requires=[
         'requests',
-        'arrow'
+        'arrow',
+        'betamax'
     ],
 )
