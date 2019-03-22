@@ -1,7 +1,7 @@
 # python-sparkapi
 Cisco Spark (Webex Teams) API wrapper for python
 
-**Note**: Please see (webexteamssdk)[https://webexteamssdk.readthedocs.io/en/latest/index.html] for a more complete and well-tested Webex Teams library.==
+**Note**: Please see [webexteamssdk](https://webexteamssdk.readthedocs.io/en/latest/index.html) for a more complete and well-tested Webex Teams library.
 
 ## Usage
 
