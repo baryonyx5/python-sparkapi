@@ -11,6 +11,9 @@ betamax = "*"
 
 [packages]
 sparkapi = {editable = true,path = "."}
+urllib3 = "*"
+requests = "*"
+betamax = "*"
 
 [requires]
 python_version = "3.7"
