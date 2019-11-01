@@ -41,6 +41,8 @@ class BaseObject(metaclass=ABCMeta):
             return None
         if fmt is None:
             fmt = self._format
+
+        value = re.sub('\.\d+Z', '', value)
         naive_ts = arrow.get(value, fmt).naive
         return arrow.get(naive_ts).to('utc').datetime
 
